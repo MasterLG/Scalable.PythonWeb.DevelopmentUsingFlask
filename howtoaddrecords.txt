@@ -1,0 +1,4 @@
+python manage shell
+from user.models import *
+user=User(username='john',password='password',email='john@fromzero.io',first_name='john',last_name='wtf',bio='life heeeeey')
+user.save()
