@@ -1,5 +1,5 @@
 from application import create_app as creat_app_base
-#from mongoengine.connection import _get_db, connect
+from mongoengine.connection import _get_db, connect
 import unittest
 
 from user.models import User

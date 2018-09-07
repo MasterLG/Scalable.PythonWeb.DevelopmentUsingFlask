@@ -1,14 +1,29 @@
-from flask import Blueprint, render_template
-from user.forms import RegisterForm
+from flask import Blueprint, render_template,request,redirect,session
+from user.forms import RegisterForm, LoginForm
 import bcrypt
 from user.models import User
 
 user_app = Blueprint('user_app', __name__)  # naming the app
 
 
-@user_app.route('/login')
+@user_app.route('/login', methods=["GET", "POST"])
 def login():
-    return "User login"
+    form=LoginForm()
+    error=None
+
+    if form.validate_on_submit():
+        user=User.objects.filter(
+            username=form.username.data
+        ).first()
+        if user:#user found
+            if bcrypt.hashpw(form.password.data,user.password)==user.password:
+                session['username']=form.username.data
+                return 'User logged in'
+            else:
+                user:None
+        if not user:#password is incorrent
+            error='Incorrect credentials'
+    return render_template('user/login.html',form=form,error=error)
 
 
 @user_app.route('/register', methods=["GET", "POST"])

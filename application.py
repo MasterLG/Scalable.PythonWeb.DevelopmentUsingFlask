@@ -1,16 +1,16 @@
 from flask import Flask
 from flask_mongoengine import MongoEngine
 
-print("5")
+
 db = MongoEngine()
-print("6")
 
 # Factory
 
 
 def create_app():
-    print("7")
+    
     app = Flask(__name__)
+
     app.config.from_pyfile('settings.py')
 
     from user.views import user_app
@@ -21,5 +21,4 @@ def create_app():
     return app
 
 
-def get_test_db():
-    db =
+
