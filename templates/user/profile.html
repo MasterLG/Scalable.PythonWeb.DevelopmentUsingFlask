@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}{{ user.username }} - Profile{% endblock %} {% block header %}
+<link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">{% endblock %} {% block content %} {% include
+"navbar.html" %}
+
+<div class="row">
+
+  <div class="col-md-3">
+
+    <img class="img-thumbnail" src="http://placehold.it/200x200" width="200" height="200" alt="{{ user.username }}">
+
+    <h3 class="profile-fullname">{{ user.first_name }} {{ user.last_name }} </h3>
+    <h3 class="profile-username"><a href="{{ url_for('user_app.profile', username=user.username) }}" />@{{ user.username
+      }}
+      </a></h3>
+
+  </div> <!-- col-md-3 -->
+
+  <div class="col-md-9">
+
+    <div id="friends-toolbar" class="row">
+
+      <div class="btn-toolbar pull-right" role="toolbar" aria-label="friends-toolbar">
+        <div class="btn-group" role="group" aria-label="friends-toolbar-buttons">
+
+        </div> <!-- btn-group -->
+      </div> <!-- btn-toolbar -->
+
+    </div> <!-- friends-toolbar -->
+
+
+
+  </div> <!-- col-md-9 -->
+
+</div>
+{% endblock %}

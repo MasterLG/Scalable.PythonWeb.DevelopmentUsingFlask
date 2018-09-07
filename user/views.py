@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,request,redirect,session
+from flask import Blueprint, render_template,request,redirect,session,url_for
 from user.forms import RegisterForm, LoginForm
 import bcrypt
 from user.models import User
@@ -17,10 +17,11 @@ def login():
         ).first()
         if user:#user found
             if bcrypt.hashpw(form.password.data,user.password)==user.password:
+                print("2")
                 session['username']=form.username.data
                 return 'User logged in'
             else:
-                user:None
+                user =None
         if not user:#password is incorrent
             error='Incorrect credentials'
     return render_template('user/login.html',form=form,error=error)
@@ -40,3 +41,13 @@ def register():
         user.save()
         return "User registered"
     return render_template('user/register.html', form=form)
+
+@user_app.route('/logout', methods=["GET", "POST"])
+def logout():
+    session.pop('username')
+    return redirect(url_for('user_app.login'))
+
+@user_app.route('/<username>', methods=["GET", "POST"])
+def profile(username):
+    user=User.objects.filter(username=username).first()
+    return render_template('user/profile.html',user=user)
